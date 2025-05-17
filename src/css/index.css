@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+    --color-dark: oklch(0.14 0.0044 285.82);
+    --color-replaceable: oklch(0.73 0.1328 235.01);
+    --color-special: oklch(0.73 0.1328 47);
+    --default-font-family: 'Source Sans 3', sans-serif;
+    --font-emoji: 'Noto Color Emoji', sans-serif;
+    --font-old: 'Source Serif 4', sans-serif;
+}
