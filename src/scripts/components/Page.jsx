@@ -1,34 +1,42 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar"
 import Card from "./Card"
-import data from "/src/scripts/data"
 import { order } from "./returnEshakap"
 
-function compare(a, b) {
-    const aList = a.word.split("");
-    const bList = b.word.split("");
-    const length = Math.max(aList.length, bList.length);
-
-    for (let i = 0; i < length; i++) {
-        const aIndex = order.indexOf(aList[i]);
-        const bIndex = order.indexOf(bList[i]);
-        if (aIndex !== bIndex) {
-            return aIndex - bIndex;
-        }
-    }
-    return aList.length - bList.length;
-}
-
 export default function Page() {
-    const [search, setSearch] = useState("")
-    const searchData = data.filter(item => {
-        const wordMatch = item.word.toLowerCase().includes(search.toLowerCase())
-        const meaningMatch = item.meaning.some(meaning => meaning.toLowerCase().includes(search.toLowerCase()))
-        return wordMatch || meaningMatch
-    })
+    const location = useLocation();
 
-    const newData = [...searchData].sort(compare)
-    const words = newData.map(element => {
+    const params = new URLSearchParams(location.search);
+    const defaultSearch = params.get("q") || "";
+
+    const [search, setSearch] = useState(defaultSearch);
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const url = search.trim()
+            ? `https://eshakapapi.onrender.com/get?q=${encodeURIComponent(search)}`
+            : `https://eshakapapi.onrender.com/get`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(obj => setData(obj))
+            .catch(err => console.error("Failed to fetch data:", err));
+    }, [search]);
+
+    const compare = (a, b) => {
+        const aIndex = order.indexOf(a.type);
+        const bIndex = order.indexOf(b.type);
+
+        if (aIndex === bIndex) {
+            return a.word.localeCompare(b.word);
+        }
+
+        return (aIndex === -1 ? Infinity : aIndex) - (bIndex === -1 ? Infinity : bIndex);
+};
+
+
+    const words = data.sort(compare).map(element => {
         return <Card key={element.id} word={element.word} meaning={element.meaning} type={element.type} />
     })
 

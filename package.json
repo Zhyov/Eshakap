@@ -1,7 +1,7 @@
 {
   "name": "eshakap",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,6 +15,7 @@
     "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^7.6.0",
     "tailwindcss": "^4.1.7"
   },
   "devDependencies": {

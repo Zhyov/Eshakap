@@ -42,6 +42,5 @@ export function getEshakap(word) {
         eshakap.push({ id: crypto.randomUUID(), syllable: final });
     }
 
-    console.log(eshakap);
     return eshakap;
 }
