@@ -9,32 +9,39 @@ export function getEshakap(word) {
     let final = [];
     let count = 0;
 
-    characters.map((char, index) => {
-        let path = charPath + char + ".svg";
+    for (let i = 0; i < characters.length; i++) {
+        const char = characters[i];
+        const prev = characters[i - 1];
+        const next = characters[i + 1];
 
-        if (!consonants.includes(characters[index - 1]) && vowels.includes(char)) {
-            final.push({id: crypto.randomUUID(), path: charPath + "aläp.svg"})
-            final.push({id: crypto.randomUUID(), path: path})
-            count++;
-        } else if ((consonants.includes(characters[index + 1])) && consonants.includes(char)) {
-            final.push({id: crypto.randomUUID(), path: path})
-            final.push({id: crypto.randomUUID(), path: charPath + "∅.svg"})
-            count++;
-        } else if (char === "'") {
-            final.push({id: crypto.randomUUID(), path: path})
+        if (vowels.includes(char) && !consonants.includes(prev)) {
+            final.push({ id: crypto.randomUUID(), path: charPath + "aläp.svg" });
+            final.push({ id: crypto.randomUUID(), path: charPath + char + ".svg" });
+            count += 2;
+        } else if (consonants.includes(char) && (!next || consonants.includes(next)))  {
+            final.push({ id: crypto.randomUUID(), path: charPath + char + ".svg" });
+            final.push({ id: crypto.randomUUID(), path: charPath + "∅.svg" });
+            count += 2;
+        } else if (consonants.includes(char) && vowels.includes(next)) {
+            final.push({ id: crypto.randomUUID(), path: charPath + char + ".svg" });
+            final.push({ id: crypto.randomUUID(), path: charPath + next + ".svg" });
+            count += 2;
+            i++;
         } else {
-            final.push({id: crypto.randomUUID(), path: path})
+            final.push({ id: crypto.randomUUID(), path: charPath + char + ".svg" });
+            count++;
         }
 
-        count++;
-        console.log(index + 1)
-        if (count === 2) {
-            eshakap.push({id: crypto.randomUUID(), syllable: final});
+        if (final.length === 2) {
+            eshakap.push({ id: crypto.randomUUID(), syllable: final });
             final = [];
-            count = 0;
         }
-    });
+    }
 
-    console.log(word, eshakap);
+    if (final.length > 0) {
+        eshakap.push({ id: crypto.randomUUID(), syllable: final });
+    }
+
+    console.log(eshakap);
     return eshakap;
 }

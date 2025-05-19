@@ -2,7 +2,7 @@ export default function Navbar({ search, setSearch }) {
     return (
         <nav className="h-18 sticky top-0 z-1 backdrop-blur flex flex-nowrap flex-row justify-around items-center w-full bg-dark/40 shadow-md border-b-1 border-b-neutral-800" >
             <div className="flex flex-nowrap flex-row basis-auto gap-x-3">
-                <a href="/">
+                <a href="/Eshakap/`}">
                     <img src="./assets/title.svg" alt="logo" className="size-16 gapx-2 self-center invert" />
                 </a>
             </div>

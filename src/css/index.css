@@ -8,3 +8,16 @@
     --font-emoji: 'Noto Color Emoji', sans-serif;
     --font-old: 'Source Serif 4', sans-serif;
 }
+
+.eshakap-a {
+    margin-top: 6px;
+    margin-bottom: 1px;
+    width: 5px;
+    height: 5px;
+}
+
+.eshakap-syllable-1 {
+    position: relative;
+    top: 2px;
+    left: -2px;
+}
