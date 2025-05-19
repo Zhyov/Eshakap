@@ -20,14 +20,14 @@ function compare(a, b) {
 }
 
 export default function Page() {
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState("")
     const searchData = data.filter(item => {
-        const wordMatch = item.word.toLowerCase().includes(search.toLowerCase());
-        const meaningMatch = item.meaning.some(meaning => meaning.toLowerCase().includes(search.toLowerCase()));
-        return wordMatch || meaningMatch;
-    }); 
+        const wordMatch = item.word.toLowerCase().includes(search.toLowerCase())
+        const meaningMatch = item.meaning.some(meaning => meaning.toLowerCase().includes(search.toLowerCase()))
+        return wordMatch || meaningMatch
+    })
 
-    const newData = [...searchData].sort(compare);
+    const newData = [...searchData].sort(compare)
     const words = newData.map(element => {
         return <Card key={element.id} word={element.word} meaning={element.meaning} type={element.type} />
     })

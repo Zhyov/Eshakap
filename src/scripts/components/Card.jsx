@@ -4,18 +4,15 @@ export default function Card({word, meaning, type}) {
     let eshakap = getEshakap(word)
     
     const eshakapElements = eshakap.map(element => {
-        const img0 = element.syllable[0];
-        const img1 = element.syllable[1];
+        const img0 = element.syllable[0]
+        const img1 = element.syllable[1]
+
         return (
             <div key={element.id} className="flex flex-col invert min-w-max items-center">
-                {img1 && (
-                    <img key={img1.id} src={img1.path} className={`ml-1 mt-1 size-2 eshakap-syllable-1${img1.path.endsWith('/a.svg') ? ' eshakap-a' : ''}`} />
-                )}
-                {img0 && (
-                    <img key={img0.id} src={img0.path} className={`size-4${img0.path.endsWith('/a.svg') ? ' eshakap-a' : ''}`} />
-                )}
+                <img key={img1.id} src={img1.path} className={`ml-1 mt-1 size-2 eshakap-syllable-1 ${img1.path.endsWith("/a.svg") ? "eshakap-a" : ""}`} />
+                <img key={img0.id} src={img0.path} className={`size-4`} />
             </div>
-        );
+        )
     })
 
     const meanings = meaning.map((element, index) => {
