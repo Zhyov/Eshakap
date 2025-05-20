@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import Navbar from "./Navbar"
 
-export default function Card({word, meaning, type}) {
-    const [eshakap, setEshakap] = useState([]);
+export default function Page() {
+    const specifiedWord = decodeURIComponent(window.location.pathname.split("/").pop())
+    const [data, setData] = useState([])
+    const [eshakap, setEshakap] = useState([])
 
     useEffect(() => {
-        fetch(`https://eshakapapi.onrender.com/convert?q=${encodeURIComponent(word)}`)
+        fetch(`https://eshakapapi.onrender.com/word?q=${encodeURIComponent(specifiedWord)}`)
+            .then(res => res.json())
+            .then(obj => setData(obj))
+            .catch(err => console.error("Failed to fetch data:", err))
+        fetch(`https://eshakapapi.onrender.com/convert?q=${encodeURIComponent(specifiedWord)}`)
             .then(res => res.json())
             .then(obj => setEshakap(obj))
             .catch(err => console.error("Failed to fetch data:", err))
-    }, []);
+    }, [specifiedWord])
     
     const eshakapElements = eshakap.map(element => {
         const img0 = element.syllable[0]
@@ -23,20 +29,29 @@ export default function Card({word, meaning, type}) {
         )
     })
 
-    const meanings = meaning.map((element, index) => {
+    let word, unsortedMeanings, type
+    
+    data.map(element => {
+        word = element.word
+        unsortedMeanings = element.meaning
+        type = element.type
+    })
+
+    console.log(unsortedMeanings, data)
+
+    const meanings = unsortedMeanings.map((element, index) => {
         return (
-            meaning.length - 1 === index
+            unsortedMeanings.length - 1 === index
             ? element
             : element + ", "
         )
     })
 
-    const leftColorClass = type === "replaceable" ? "border-l-replaceable has-[a:hover]:border-replaceable" : type === "general" ? "border-l-white has-[a:hover]:border-white" : type === "combination" ? "border-l-combination has-[a:hover]:border-combination" : "border-l-special has-[a:hover]:border-special"
-
     return (
-        <li>
-            <div className={`shadow-sm flex-1 flex flex-wrap flex-col border-2 gap-1 border-neutral-800 border-l-4 has-[a:hover]:border-l-8 w-auto rounded-md duration-100 ${leftColorClass}`}>
-                <Link to={`/Eshakap/words/${word}`} className="flex-1">
+        <>
+            <Navbar search={search} setSearch={setSearch} />
+            <div className="flex flex-col items-stretch mt-2 gap-2 mx-auto max-w-11/12 md:max-w-[min(98vw,1000px)]">
+                <div className="shadow-sm flex-1 flex flex-wrap flex-col border-2 gap-1 border-neutral-800 border-l-4 has-[a:hover]:border-l-8 w-auto rounded-md duration-100">
                     <div className="flex flex-col space-y-1 p-4 pl-6">
                         <div className="flex flex-row w-full mb-1">
                             <div className="flex flex-row min-w-max mr-2">{eshakapElements}</div>
@@ -45,8 +60,8 @@ export default function Card({word, meaning, type}) {
                         <span className="w-full text-[16px]">{meanings}</span>
                         <span className="w-full text-[14px] text-neutral-400">{type}</span>
                     </div>
-                </Link>
+                </div>
             </div>
-        </li>
+        </>
     )
 }
