@@ -5,7 +5,7 @@ export default function Navbar({ search, setSearch }) {
         <nav className="h-18 sticky top-0 z-1 backdrop-blur flex flex-nowrap flex-row justify-around items-center w-full bg-dark/40 shadow-md border-b-1 border-b-neutral-800" >
             <div className="flex flex-nowrap flex-row basis-auto gap-x-3">
                 <Link to="/Eshakap/">
-                    <img src="./assets/title.svg" alt="logo" className="size-16 gapx-2 self-center invert" />
+                    <img src="https://zhyov.github.io/Eshakap/assets/title.svg" alt="logo" className="size-16 gapx-2 self-center invert" />
                 </Link>
             </div>
             <div className="flex flex-nowrap flex-row justify-end basis-7/10 md:basis-9/10 gap-x-2">

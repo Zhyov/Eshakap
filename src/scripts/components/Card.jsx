@@ -2,14 +2,14 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 export default function Card({word, meaning, type}) {
-    const [eshakap, setEshakap] = useState([]);
+    const [eshakap, setEshakap] = useState([])
 
     useEffect(() => {
         fetch(`https://eshakapapi.onrender.com/convert?q=${encodeURIComponent(word)}`)
             .then(res => res.json())
             .then(obj => setEshakap(obj))
             .catch(err => console.error("Failed to fetch data:", err))
-    }, []);
+    }, [])
     
     const eshakapElements = eshakap.map(element => {
         const img0 = element.syllable[0]

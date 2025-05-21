@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom"
 import Navbar from "./Navbar"
 import Card from "./Card"
 
@@ -23,9 +23,6 @@ export default function Page() {
             .then(res => res.json())
             .then(obj => setData(obj))
             .catch(err => console.error("Failed to fetch data:", err))
-    }, [search])
-
-    useEffect(() => {
         fetch("https://eshakapapi.onrender.com/max")
             .then(res => res.json())
             .then(obj => setMaxCount(obj.max))
@@ -34,7 +31,7 @@ export default function Page() {
             .then(res => res.json())
             .then(obj => setOrder(obj))
             .catch(err => console.error("Failed to fetch data:", err))
-    }, [])
+    }, [search])
 
     const compare = (a, b) => {
         const aIndex = order.indexOf(a.type)
