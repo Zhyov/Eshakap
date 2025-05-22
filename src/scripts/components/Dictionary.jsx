@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import Navbar from "./Navbar"
 import Card from "./Card"
+import CardSkeleton from "./CardSkeleton"
 
 export default function Page() {
     const location = useLocation()
@@ -13,6 +14,7 @@ export default function Page() {
     const [data, setData] = useState([])
     const [maxCount, setMaxCount] = useState(0)
     const [order, setOrder] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const url = search.trim()
@@ -21,16 +23,30 @@ export default function Page() {
 
         fetch(url)
             .then(res => res.json())
-            .then(obj => setData(obj))
-            .catch(err => console.error("Failed to fetch data:", err))
+            .then(obj => {
+                setData(obj)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.error("Failed to fetch data:", err)
+                setLoading(false)
+            })
         fetch("https://eshakapapi.onrender.com/max")
             .then(res => res.json())
-            .then(obj => setMaxCount(obj.max))
-            .catch(err => console.error("Failed to fetch data:", err))
+            .then(obj => {
+                setMaxCount(obj.max)
+            })
+            .catch(err => {
+                console.error("Failed to fetch data:", err)
+            })
         fetch("https://eshakapapi.onrender.com/order")
             .then(res => res.json())
-            .then(obj => setOrder(obj))
-            .catch(err => console.error("Failed to fetch data:", err))
+            .then(obj => {
+                setOrder(obj)
+            })
+            .catch(err => {
+                console.error("Failed to fetch data:", err)
+            })
     }, [search])
 
     const compare = (a, b) => {
@@ -50,9 +66,10 @@ export default function Page() {
 
     return (
         <>
-            <Navbar search={search} setSearch={setSearch} />
+            <Navbar searchEnabled={true} search={search} setSearch={setSearch} />
             <ul className="flex flex-col items-stretch mt-2 gap-2 mx-auto max-w-11/12 md:max-w-[min(80vw,1000px)]">
-                <span className="text-xl text-neutral-400">{data.length}/{maxCount} amijąçj</span>
+                <span className="text-xl self-center">Amijąçj: {data.length}/{maxCount}</span>
+                {loading ? Array(10).fill(0).map((_, i) => <CardSkeleton key={i} />) : words}
                 {words}
             </ul>
         </>

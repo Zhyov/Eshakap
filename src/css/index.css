@@ -3,9 +3,8 @@
 @theme {
     --color-dark: oklch(0.14 0.0044 285.82);
     --color-replaceable: oklch(0.73 0.1328 235.01);
-    --color-special: oklch(0.73 0.1328 47);
-    --color-combination: oklch(0.7 0.1 87.6);
-    --color-accent: oklch(0.2739 0.0055 286.03 / 20%);
+    --color-special: oklch(0.6291 0.168 24.57);
+    --color-combination: oklch(0.6677 0.1 160.24);
     --default-font-family: 'Source Sans 3', sans-serif;
     --font-emoji: 'Noto Color Emoji', sans-serif;
     --font-old: 'Source Serif 4', sans-serif;

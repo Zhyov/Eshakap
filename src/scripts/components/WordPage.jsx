@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react"
-import { useLocation, Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import Navbar from "./Navbar"
+import WordPageSkeleton from "./WordPageSkeleton"
 
-export default function Page() {
-    const specifiedWord = decodeURIComponent(window.location.pathname.split("/").pop())
-    const location = useLocation()
-
-    const params = new URLSearchParams(location.search)
-    const defaultSearch = params.get("q") || ""
-
-    const [search, setSearch] = useState(defaultSearch)
+export default function WordPage() {
+    const { word: specifiedWord } = useParams();
     const [data, setData] = useState([])
     const [eshakap, setEshakap] = useState([])
+
+    useEffect(() => {
+        setLoading(true)
+        setData([])
+        setEshakap([])
+        setWord("")
+        setUnsortedMeanings([])
+        setType("")
+        setPhonetic("")
+        setCombination([])
+    }, [specifiedWord])
 
     useEffect(() => {
         fetch(`https://eshakapapi.onrender.com/word?q=${specifiedWord}`)
@@ -42,6 +48,7 @@ export default function Page() {
     const [type, setType] = useState("")
     const [phonetic, setPhonetic] = useState("")
     const [combination, setCombination] = useState([])
+    const [loading, setLoading] = useState(true)
     
     useEffect(() => {
         if (data.length > 0) {
@@ -50,6 +57,7 @@ export default function Page() {
             setType(data[0].type)
             setPhonetic(data[0].phonetic)
             setCombination(data[0].combination)
+            setLoading(false)
         }
     }, [data])
 
@@ -72,12 +80,15 @@ export default function Page() {
 
     return (
         <>
-            <Navbar search={search} setSearch={setSearch} />
-            
+        {
+            loading
+            ? <WordPageSkeleton />
+            : <>
+            <Navbar searchEnabled={false} />
             <div className="flex flex-col items-stretch mt-2 gap-2 mx-auto max-w-11/12 md:max-w-[min(98vw,1500px)]">
                 <div className="flex flex-row gap-2 mt-2">
-                    <Link to="/Eshakap/">
-                        <img src="https://zhyov.github.io/Eshakap/assets/icon/back.svg" alt="back" className="size-10 p-3 rounded-md invert transition-colors hover:bg-accent" />
+                    <Link to="/Eshakap/dictionary">
+                        <img src="https://zhyov.github.io/Eshakap/assets/icon/back.svg" alt="back" className="size-10 p-3 rounded-md invert transition-colors hover:bg-neutral-300" />
                     </Link>
                     <span className="text-4xl">{word}</span>
                 </div>
@@ -94,6 +105,8 @@ export default function Page() {
                     </div>
                 </div>
             </div>
+            </>
+        }
         </>
     )
 }
