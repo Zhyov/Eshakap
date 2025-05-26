@@ -20,6 +20,7 @@ export default function WordPage() {
     }, [specifiedWord])
 
     useEffect(() => {
+        document.title = "Äšakap · " + specifiedWord
         fetch(`https://eshakapapi.onrender.com/word?q=${specifiedWord}`)
             .then(res => res.json())
             .then(obj => setData(obj))
@@ -84,7 +85,7 @@ export default function WordPage() {
             loading
             ? <WordPageSkeleton />
             : <>
-            <Navbar searchEnabled={false} />
+            <Navbar gridEnabled={false} searchEnabled={false} />
             <div className="flex flex-col items-stretch mt-2 gap-2 mx-auto max-w-11/12 md:max-w-[min(98vw,1500px)]">
                 <div className="flex flex-row gap-2 mt-2">
                     <Link to="/Eshakap/dictionary">

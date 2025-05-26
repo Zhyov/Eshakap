@@ -1,10 +1,15 @@
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import Navbar from "./Navbar"
 
 export default function Home() {
+    useEffect(() => {
+        document.title = "Äšakap"
+    })
+
     return (
         <div className="relative mx-auto p-0 flex flex-col min-h-dvh">
-            <Navbar searchEnabled={false} />
+            <Navbar gridEnabled={false} searchEnabled={false} />
             <main className="flex flex-col justify-center items-center border-neutral-800 rounded-sm gap-4 my-auto min-h-full">
                 <h1 className="text-4xl font-[600]">Äšakap</h1>
                 <p className="text-center w-[65%]">Äšakap is a conlang created by <a href="https://github.com/Zhyov" className="underline">Zhyov</a>. This is an app made with the purpose of storing information about the language.</p>

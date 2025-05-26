@@ -20,7 +20,8 @@ export default function Page() {
         const url = search.trim()
             ? `https://eshakapapi.onrender.com/fetch?q=${encodeURIComponent(search)}`
             : `https://eshakapapi.onrender.com/fetch`
-
+        document.title = "Äšakap · Dictionary"
+        
         fetch(url)
             .then(res => res.json())
             .then(obj => {
@@ -66,7 +67,7 @@ export default function Page() {
 
     return (
         <>
-            <Navbar searchEnabled={true} search={search} setSearch={setSearch} />
+            <Navbar gridEnabled={true} searchEnabled={true} search={search} setSearch={setSearch} />
             <ul className="flex flex-col items-stretch mt-2 gap-2 mx-auto max-w-11/12 md:max-w-[min(80vw,1000px)]">
                 <span className="text-xl self-center">Amijąçj: {data.length}/{maxCount}</span>
                 {loading ? Array(10).fill(0).map((_, i) => <CardSkeleton key={i} />) : words}
