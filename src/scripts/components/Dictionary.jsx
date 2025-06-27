@@ -15,6 +15,7 @@ export default function Page() {
     const [maxCount, setMaxCount] = useState(0)
     const [order, setOrder] = useState([])
     const [loading, setLoading] = useState(true)
+    const [gridCols, setGridCols] = useState(1)
 
     useEffect(() => {
         const url = search.trim()
@@ -65,13 +66,18 @@ export default function Page() {
         return <Card key={element.id} word={element.word} meaning={element.meaning} type={element.type} />
     })
 
+    const gridColsClass = {
+        1: "grid-cols-1",
+        2: "grid-cols-2",
+        3: "grid-cols-3"
+    }[gridCols] || "grid-cols-1"
+
     return (
         <>
-            <Navbar gridEnabled={true} searchEnabled={true} search={search} setSearch={setSearch} />
-            <ul className="flex flex-col items-stretch mt-2 gap-2 mx-auto max-w-11/12 md:max-w-[min(80vw,1000px)]">
-                <span className="text-xl self-center">Amijąçj: {data.length}/{maxCount}</span>
-                {loading ? Array(10).fill(0).map((_, i) => <CardSkeleton key={i} />) : words}
-                {words}
+            <Navbar gridEnabled={true} searchEnabled={true} search={search} setSearch={setSearch} gridCols={gridCols} setGridCols={setGridCols} />
+            <div className="text-xl my-2 text-center">Amijąçj: {data.length}/{maxCount}</div>
+            <ul className={`grid ${gridColsClass} items-stretch mt-2 gap-2 mx-auto max-w-11/12 md:max-w-[min(90vw,1200px)]`}>
+                {loading ? Array(6).fill(0).map((_, i) => <CardSkeleton key={i} />) : words}
             </ul>
         </>
     )

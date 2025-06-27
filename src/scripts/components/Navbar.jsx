@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
-export default function Navbar({ gridEnabled, searchEnabled, search, setSearch }) {
+export default function Navbar({ gridEnabled, searchEnabled, search, setSearch, gridCols, setGridCols }) {
 
     const hideOrNot = searchEnabled ? "hidden md:block" : "block"
     const changeGrid = gridEnabled ? "hidden md:block" : "hidden"
@@ -47,18 +47,42 @@ export default function Navbar({ gridEnabled, searchEnabled, search, setSearch }
                 searchEnabled
                 ? <div className="flex flex-nowrap flex-row basis-8/10 gap-x-2 justify-end">
                     <div>
-                        <button onClick={() => setOpenMenu(openMenu === "filter" ? null : "filter")} className="flex flex-nowrap flex-row p-3 rounded-md ring-1 ring-neutral-800 items-center transition-colors hover:bg-neutral-800 hover:cursor-pointer hover:*:invert">
+                        <button onClick={() => setOpenMenu(openMenu === "filter" ? null : "filter")} className="hidden flex-nowrap flex-row p-3 rounded-md ring-1 ring-neutral-800 items-center transition-colors hover:bg-neutral-800 hover:cursor-pointer hover:*:invert">
                             <img src="https://www.svgrepo.com/show/152218/funnel.svg" alt="filter" className="size-4 invert-50" />
                         </button>
                         {openMenu === "filter" && (
                             <div className="absolute -translate-x-3/8 translate-y-16 flex flex-nowrap flex-col items-center top-0 rounded-sm ring-1 w-40 ring-neutral-800 bg-dark">
                                 <span className="font-[600] px-2 py-1.5">Search Filter</span>
-                                <div className="bg-neutral-800 -mx-1 my-1 h-px"></div>
-                                <div className="flex flex-nowrap flex-col">
-                                    <button>general</button>
-                                    <button>special</button>
-                                    <button>replaceable</button>
-                                    <button>combination</button>
+                                <span className="bg-neutral-800 h-0.5 w-full"></span>
+                                <div className="flex flex-nowrap flex-col w-full">
+                                    <button className="hover:bg-neutral-800 relative w-auto justify-start items-center rounded-sm m-0.5 py-1.5 pl-4 pr-2 gap-x-3 cursor-pointer outline-none text-sm flex flex-nowrap flex-row">
+                                        <span className="absolue left-2 flex size-3.5 items-center">
+                                            <svg className="size-4" viewBox="0 0 24 24" width="1.2em" height="1.2em">
+                                                <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6L9 17l-5-5"></path>
+                                            </svg>
+                                        </span>general
+                                    </button>
+                                    <button className="hover:bg-neutral-800 relative w-full justify-start items-center rounded-sm py-1.5 pl-4 pr-2 gap-x-3 cursor-pointer outline-none text-sm flex flex-nowrap flex-row">
+                                        <span className="flex size-3.5 items-center">
+                                            <svg className="size-4" viewBox="0 0 24 24" width="1.2em" height="1.2em">
+                                                <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6L9 17l-5-5"></path>
+                                            </svg>
+                                        </span>special
+                                    </button>
+                                    <button className="hover:bg-neutral-800 relative w-full justify-start items-center rounded-sm py-1.5 pl-4 pr-2 gap-x-3 cursor-pointer outline-none text-sm flex flex-nowrap flex-row">
+                                        <span className="flex size-3.5 items-center">
+                                            <svg className="size-4" viewBox="0 0 24 24" width="1.2em" height="1.2em">
+                                                <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6L9 17l-5-5"></path>
+                                            </svg>
+                                        </span>replaceable
+                                    </button>
+                                    <button className="hover:bg-neutral-800 relative w-full justify-start items-center rounded-sm py-1.5 pl-4 pr-2 gap-x-3 cursor-pointer outline-none text-sm flex flex-nowrap flex-row">
+                                        <span className="flex size-3.5 items-center">
+                                            <svg className="size-4" viewBox="0 0 24 24" width="1.2em" height="1.2em">
+                                                <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6L9 17l-5-5"></path>
+                                            </svg>
+                                        </span>combination
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -70,11 +94,23 @@ export default function Navbar({ gridEnabled, searchEnabled, search, setSearch }
                         {openMenu === "grid" && (
                             <div className="absolute -translate-x-3/8 translate-y-16 flex flex-nowrap flex-col items-center top-0 rounded-sm ring-1 w-40 ring-neutral-800 bg-dark">
                                 <span className="font-[600] px-2 py-1.5">Grid View</span>
-                                <span className="bg-white -mx-1 my-1 h-10px w-full"></span>
-                                <div className="flex flex-nowrap flex-col">
-                                    <button>one</button>
-                                    <button>two</button>
-                                    <button>three</button>
+                                <span className="bg-neutral-800 h-0.5 w-full"></span>
+                                <div className="flex flex-nowrap flex-col w-full">
+                                    <button disabled={gridCols === 1} onClick={() => setGridCols(1)} className="hover:bg-neutral-800 relative w-full justify-start items-center rounded-sm py-1.5 pl-4 pr-2 gap-x-3 cursor-pointer outline-none text-sm flex flex-nowrap flex-row">
+                                        <span className="flex size-3.5 items-center">
+                                            <span className={`${gridCols === 1 ? "" : "hidden"}`}>∘</span>
+                                        </span>one
+                                    </button>
+                                    <button disabled={gridCols === 2} onClick={() => setGridCols(2)} className="hover:bg-neutral-800 relative w-full justify-start items-center rounded-sm py-1.5 pl-4 pr-2 gap-x-3 cursor-pointer outline-none text-sm flex flex-nowrap flex-row">
+                                        <span className="flex size-3.5 items-center">
+                                            <span className={`${gridCols === 2 ? "" : "hidden"}`}>∘</span>
+                                        </span>two
+                                    </button>
+                                    <button disabled={gridCols === 3} onClick={() => setGridCols(3)} className="hover:bg-neutral-800 relative w-full justify-start items-center rounded-sm py-1.5 pl-4 pr-2 gap-x-3 cursor-pointer outline-none text-sm flex flex-nowrap flex-row">
+                                        <span className="flex size-3.5 items-center">
+                                            <span className={`${gridCols === 3 ? "" : "hidden"}`}>∘</span>
+                                        </span>three
+                                    </button>
                                 </div>
                             </div>
                         )}
